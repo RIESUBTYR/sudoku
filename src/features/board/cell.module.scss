@@ -8,6 +8,7 @@
   padding: 5px;
   box-sizing: border-box;
   font-size: large;
+  text-align: center;
 }
 
 .rightborder {
@@ -15,4 +16,16 @@
 }
 .bottomborder {
   border-bottom: 2px solid rgb(14, 14, 14);
+}
+
+.visible {
+  background-color: rgb(153, 153, 153);
+}
+.hidden {
+  background-color: rgb(219, 219, 219);
+}
+
+.highlight {
+  background-color: rgb(182, 255, 182);
+  border: 3px solid rgb(130, 214, 130);
 }

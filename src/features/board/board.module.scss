@@ -4,6 +4,5 @@
   grid-template-columns: repeat(9, $celldimension);
   grid-template-rows: repeat(9, $celldimension);
   width: fit-content;
-  margin: auto;
   border: 2px solid black;
 }

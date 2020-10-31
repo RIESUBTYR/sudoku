@@ -1,14 +1,34 @@
-import React , {useState} from 'react'
+import React , {useState, useEffect} from 'react'
 import Cell from "./cell";
 import Boardstyles from "./board.module.scss"
+import {useSelector} from "react-redux";
 
-export default function board() {
+export default function Board() {
 
-    // const [correctcount, increasecount] = useState(0);
+    const [correctcount, increasecount] = useState(0);
 
-    // const incrementor = ivalue => {
-    //     increasecount(correctcount + ivalue);
-    // }
+    var initialarray = [
+        [[7,1],[9,1],[2,1],[4,0],[8,1],[3,0],[6,1],[5,0],[1,0]],
+        [[8,0],[6,0],[5,1],[9,0],[7,0],[1,1],[4,0],[3,1],[2,1]],
+        [[4,0],[3,0],[1,1],[6,1],[5,1],[2,0],[9,0],[7,1],[8,0]],
+        [[9,0],[5,0],[8,1],[7,0],[6,1],[4,0],[2,1],[1,0],[3,1]],
+        [[6,1],[7,1],[3,1],[2,1],[1,0],[9,1],[8,0],[4,1],[5,0]],
+        [[2,0],[1,1],[4,0],[8,1],[3,0],[5,0],[7,1],[9,0],[6,1]],
+        [[5,1],[8,0],[9,0],[1,0],[4,1],[6,1],[3,1],[2,0],[7,1]],
+        [[3,0],[4,1],[7,1],[5,1],[2,0],[8,1],[1,0],[6,0],[9,1]],
+        [[1,1],[2,1],[6,0],[3,1],[9,1],[7,1],[5,0],[8,1],[4,0]]
+    ]
+
+    const incrementor = ivalue => {
+        increasecount(correctcount + ivalue);
+    }
+
+    const issolved = useSelector(state => state.board.issolved);
+
+    useEffect(() => {
+        if(issolved)
+            alert("Congrats! You have solved it!");
+    } );
 
     var allcells = [], key=0;
     for(var i=1;i<10;i++)
@@ -21,8 +41,11 @@ export default function board() {
              borderinfo.bottom = 1;
         if(j==3 || j==6)    
             borderinfo.right = 1;
-        allcells.push(<Cell borderinfo={borderinfo} key={key++} i={i} j={j} />);
+        allcells.push(<Cell cellinfo = {initialarray[i-1][j-1]} incrementor={incrementor} borderinfo={borderinfo} key={key++} i={i} j={j} />);
     }
+
+    
+
     return (
         <div className={Boardstyles.board} >
             {allcells}

@@ -3,6 +3,6 @@ import boardReducer from '../features/board/boardSlice';
 
 export default configureStore({
   reducer: {
-    counter: boardReducer,
+    board: boardReducer,
   },
 });
