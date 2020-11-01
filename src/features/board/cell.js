@@ -38,11 +38,11 @@ export default function Cell(props) {
         if(hightlightedcell == cellid && inputnum.inputterid == cellid){
             element.innerHTML = inputnum.inputnum;
             if(inputnum.inputnum == value && flag == 0){
-                dispatch(countincrement({sign: 1}));
+                dispatch(countincrement({sign: 1})); //increment correct-count in state, if the user entered value is correct
                 setflag(1);
             }
             else if(flag && inputnum.inputnum != value){
-                dispatch(countincrement({sign: -1}));
+                dispatch(countincrement({sign: -1})); //decrease coutnt if value is wrong and previously count was increased
                 setflag(0);
             }
         }
