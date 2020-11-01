@@ -3,6 +3,8 @@ import Cellstyles from "./cell.module.scss"; //'scss module', not a normal scss 
 import {useSelector, useDispatch} from 'react-redux' //using Redux inside react components
 import {highlighter, countincrement} from "./boardSlice"; //importing 'redux action creators' corresponding to the reducers in boardSlice file. 
 
+
+
 export default function Cell(props) {
     const {i,j} = props; //destructuring  object
     const [value, visibility] = props.cellinfo; //destructuring array
@@ -14,6 +16,7 @@ export default function Cell(props) {
     var elementtorender;
 
 
+    
     
     const dispatch = useDispatch();
      const highlightcell = () => {
