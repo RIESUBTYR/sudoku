@@ -1,17 +1,28 @@
 import {createSlice} from "@reduxjs/toolkit";
+import socket from "socket.io-client";
+import object from "./initialarray";
 
-var init = {
-    highlightedcell : null,
-    inputnum : {inputnum: null, inputterid : null},
-    correctcount : 0,
-    requiredcorrect : 81-43,
-    issolved : 0
-}
+const url = "http://localhost:3001";
+window.io = socket(url);
+window.io.on("connect" , () => console.log("connected to server"));
+
 
 const boardSlice = createSlice({
     name : "board",
-    initialState : init, 
+    initialState : object, 
     reducers : {
+        updateobject : {
+            reducer(state, action) {
+            state = action.payload;
+            return state;
+            },
+            prepare(object){
+                return {
+                    payload : object
+                }
+            }
+        }
+        ,
         highlighter(state, action){
             const {cellid} = action.payload;
             state.highlightedcell = cellid;
@@ -37,4 +48,4 @@ const boardSlice = createSlice({
 
 
 export default boardSlice.reducer;
-export const {highlighter, inputnumsetter, countincrement} = boardSlice.actions;
+export const {highlighter, inputnumsetter, countincrement, updateobject} = boardSlice.actions;

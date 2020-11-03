@@ -7,7 +7,7 @@ import {highlighter, countincrement} from "./boardSlice"; //importing 'redux act
 
 export default function Cell(props) {
     const {i,j} = props; //destructuring  object
-    const [value, visibility] = props.cellinfo; //destructuring array
+    const [value, visibility, isselected, isright] = props.cellinfo; //destructuring array
     const cellid = (i*10)+j; //a two digit integer
     var rightborder, bottomborder;
     const {right, bottom} = props.borderinfo; //destructuring
@@ -16,21 +16,21 @@ export default function Cell(props) {
     var elementtorender;
 
 
-    
-    
+
     const dispatch = useDispatch();
      const highlightcell = () => {
-        dispatch(highlighter({cellid : cellid})) //dispatching redux actions . The highligter() function we imported will return a redux action. The dispatch() function will then dispatch that action. 
+        window.io.emit("highlightcell", cellid)
     }
 
-    const hightlightedcell = useSelector((state) => state.board.highlightedcell);
     const inputnum = useSelector(state => state.board.inputnum);
+    const hightlightedcell = useSelector(state => state.board.highlightedcell);
 
     const [flag, setflag] = useState(0); //using this flag to increment/decrement count exactly once for correct/wrong input 
     
     
     useEffect(() => {
         var element = document.getElementById(cellid);
+        console.log(hightlightedcell)
         if(hightlightedcell == cellid){
             element.classList.add(Cellstyles.highlight);
         }

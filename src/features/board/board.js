@@ -1,29 +1,30 @@
 import React , {useState, useEffect} from 'react'
 import Cell from "./cell";
 import Boardstyles from "./board.module.scss"
-import {useSelector} from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
+import {updateobject} from "./boardSlice";
+// import io from "./boardSlice";
 
 export default function Board() {
 
     
-    var initialarray = [
-        [[7,1],[9,1],[2,1],[4,0],[8,1],[3,0],[6,1],[5,0],[1,0]],
-        [[8,0],[6,0],[5,1],[9,0],[7,0],[1,1],[4,0],[3,1],[2,1]],
-        [[4,0],[3,0],[1,1],[6,1],[5,1],[2,0],[9,0],[7,1],[8,0]],
-        [[9,0],[5,0],[8,1],[7,0],[6,1],[4,0],[2,1],[1,0],[3,1]],
-        [[6,1],[7,1],[3,1],[2,1],[1,0],[9,1],[8,0],[4,1],[5,0]],
-        [[2,0],[1,1],[4,0],[8,1],[3,0],[5,0],[7,1],[9,0],[6,1]],
-        [[5,1],[8,0],[9,0],[1,0],[4,1],[6,1],[3,1],[2,0],[7,1]],
-        [[3,0],[4,1],[7,1],[5,1],[2,0],[8,1],[1,0],[6,0],[9,1]],
-        [[1,1],[2,1],[6,0],[3,1],[9,1],[7,1],[5,0],[8,1],[4,0]]
-    ]
-        
+    const initialarray = useSelector(state => state.board.initialarray)
     const issolved = useSelector(state => state.board.issolved); //selecting data from redux store
 
     useEffect(() => {
         if(issolved)
             alert("Congrats! You have solved it!");
     } ); //useEffect hook 
+
+    const dispatch = useDispatch();
+    window.io.on("havenumbers", object => {
+        dispatch(updateobject(object));
+         })
+
+    useEffect(() => {
+            window.io.emit("givenumbers");
+    },[])
+    
 
     var allcells = [], key=0;
     for(var i=1;i<10;i++)
