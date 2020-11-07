@@ -4,23 +4,29 @@ import object from "./initialarray";
 
 const url = "http://localhost:3001";
 window.io = socket(url);
-window.io.on("connect" , () => console.log("connected to server"));
+window.io.on("connect" , () => console.log("connected to server" + window.io.id));
 
 
 const boardSlice = createSlice({
     name : "board",
     initialState : object, 
     reducers : {
-        updateobject : {
-            reducer(state, action) {
+        initiate(state, action){
             state = action.payload;
             return state;
-            },
-            prepare(object){
-                return {
-                    payload : object
-                }
+        },
+        updateobject : {
+            reducer(state, action) {
+            const clientid = state.clientid;
+            state = {...action.payload, clientid: clientid};
+            return state;
             }
+            // prepare(object, clientid){
+            //     const newobject = {...object, clientid: clientid};
+            //     return {
+            //         payload : newobject
+            //     }
+            // }
         }
         ,
         highlighter(state, action){
@@ -48,4 +54,4 @@ const boardSlice = createSlice({
 
 
 export default boardSlice.reducer;
-export const {highlighter, inputnumsetter, countincrement, updateobject} = boardSlice.actions;
+export const {highlighter, inputnumsetter, countincrement, updateobject,initiate} = boardSlice.actions;
