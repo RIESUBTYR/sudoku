@@ -4,7 +4,8 @@ import object from "./initialarray";
 
 const url = "http://localhost:3001";
 const heroku = "https://reduxokubackend.herokuapp.com/"
-window.io = socket(url);
+const hitpoint = (window.location.href.includes("localhost",0)) ? url : heroku ;
+window.io = socket(hitpoint);
 window.io.on("connect" , () => console.log("connected to server" + window.io.id));
 
 
