@@ -22,6 +22,8 @@ export default function Cell(props) {
     }
 
     const hightlightedcell = useSelector(state => state.board.highlightedcell);
+    const mistakes = useSelector(state => state.result.mistakes);
+    const showmistake = useSelector(state => state.result.showmistake)
    
     
     
@@ -37,7 +39,6 @@ export default function Cell(props) {
         const otherclients = clientsarray.filter((e) => {
             return e != clientid
         }); //removes this client id from the array
-        console.log(otherclients);
         if(isthisclient)
             element.classList.add(Cellstyles.highlight);
         else
@@ -58,6 +59,19 @@ export default function Cell(props) {
             element.innerHTML = inputnum;
         }
     })
+
+    useEffect(() => {
+        var element = document.getElementById(cellid);
+        if(showmistake){
+        if(mistakes.includes(cellid,0))
+            element.classList.add(Cellstyles.mistake)
+        }
+        setTimeout(clearmistake, 2000)
+    },[showmistake])
+
+    const clearmistake = () => {
+        document.getElementById(cellid).classList.remove(Cellstyles.mistake)
+    }
     
 
     if(visibility)

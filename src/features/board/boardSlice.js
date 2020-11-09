@@ -3,6 +3,7 @@ import socket from "socket.io-client";
 import object from "./initialarray";
 
 const url = "http://localhost:3001";
+const heroku = "https://reduxokubackend.herokuapp.com/"
 window.io = socket(url);
 window.io.on("connect" , () => console.log("connected to server" + window.io.id));
 

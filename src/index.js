@@ -6,8 +6,10 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import {initiate, updateobject} from "./features/board/boardSlice";
+import {mistakes} from "./features/board/resultReducer"
 
 
+window.io.on("heyclient", data => alert(data));
 window.io.on("getinitiated", initialobj => {
         store.dispatch(initiate(initialobj));
     })
@@ -19,6 +21,10 @@ window.io.on("havenumbers", object => {
 window.io.on("inputnumchanged", object => {
   store.dispatch(updateobject(object))
 })
+
+window.io.on("mistakes", mistake => {
+  store.dispatch(mistakes(mistake))}
+   )
 
 ReactDOM.render(
   <React.StrictMode>
