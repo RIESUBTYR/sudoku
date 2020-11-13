@@ -2,7 +2,6 @@ import React , {useState, useEffect} from 'react'
 import Cell from "./cell";
 import Boardstyles from "./board.module.scss"
 import {useSelector,useDispatch} from "react-redux";
-// import io from "./boardSlice";
 
 export default function Board() {
 
