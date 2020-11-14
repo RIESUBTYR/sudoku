@@ -3,10 +3,9 @@ import socket from "socket.io-client";
 import object from "./initialarray";
 
 const url = "http://localhost:3001";
-const heroku = "https://reduxokubackend.herokuapp.com/"
-const hitpoint = (window.location.href.includes("localhost",0)) ? url : heroku ;
-window.io = socket(hitpoint);
-window.io.on("connect" , () => console.log("connected to server" + window.io.id));
+const heroku = "https://reduxokubackend.herokuapp.com"
+export const hitpoint = (window.location.href.includes("localhost",0)) ? url : heroku ;
+
 
 
 const boardSlice = createSlice({

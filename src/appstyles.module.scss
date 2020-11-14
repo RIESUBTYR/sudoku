@@ -7,6 +7,22 @@
   padding-top: 20px;
 }
 
+.secondparent {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+.sidediv {
+  background-color: black;
+  height: fit-content;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .secondparent {
+    display: block;
+  }
+}
+
 .gamearea {
   display: flex;
   justify-content: center;

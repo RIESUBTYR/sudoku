@@ -16,7 +16,7 @@ export default function Board() {
     } ); //useEffect hook 
 
     useEffect(() => {
-            window.io.emit("initiateme"); //Emit event to get the initial object from server
+            // window.io.emit("initiateme"); //Emit event to get the initial object from server
     },[]) //this will run exactly once .
     
 

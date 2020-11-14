@@ -9,6 +9,8 @@ import {showmistake} from "./features/board/resultReducer"
 import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom"
 import Header from "./features/header/header"
 import Boardoverlay from "./features/board/boardoverlay"
+import Roomoverlay from "./features/board/roomoverlay"
+import Onlineusers from "./features/gamecontrols/onlineusers"
 
 
 
@@ -19,27 +21,43 @@ function App() {
   }
 
   const isgameon = useSelector(state => state.games.isgameon)
-  var boardoverlay, inputnumbers 
-  boardoverlay = isgameon ? null : (<div className={Appstyles.overlay}>
+  const isinside = useSelector(state => state.games.isinside)
+  var boardoverlay, inputnumbers, roomoverlay
+  if(isinside){
+     boardoverlay = isgameon ? null : (<div className={Appstyles.overlay}>
             <Boardoverlay />
             </div> )
-  inputnumbers = isgameon ? (<div className={Appstyles.gamecontrol}>
+    inputnumbers = isgameon ? (<div className={Appstyles.gamecontrol}>
           <Inputnums/>
           <button onClick={handleclick} >Show mistakes</button>
           </div> ): null;
+
+  }
+  else {
+    roomoverlay = <div className={Appstyles.overlay}>
+            <Roomoverlay />
+            </div>
+  }
+ 
   return (
     <Router>
     <Header/>
     <div className={Appstyles.parentcontainer}>
     <Switch>
       <Route exact path="/">
+        <div className={Appstyles.secondparent}>
           <div className={Appstyles.gamearea}>
           <div className={Appstyles.boardandoverlay}>
+            {roomoverlay}
             {boardoverlay}
             <Board/>
           </div>
             {inputnumbers}
           </div>
+          <div className={Appstyles.sidediv}>
+           <Onlineusers/>
+          </div>
+        </div>
       </Route>
       <Route path="/documentation">
         <div>This is the documentation page</div>
