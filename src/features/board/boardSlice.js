@@ -4,11 +4,14 @@ import object from "./initialarray";
 
 const url = "http://localhost:3001";
 const heroku = "https://reduxokubackend.herokuapp.com"
-export const hitpoint = (window.location.href.includes("localhost",0)) ? url : heroku ;
+export const hitpoint = (window.location.href.includes("localhost",0)) ? url : heroku ; 
+
+window.io = socket(hitpoint+"/gameplay"); //we have to make this socket instance accessible in all our components. That is why we are using the 'window' work to declare it as a global variable. 
+window.io.on("connection", () => console.log("normal connection to server"))
 
 
 
-const boardSlice = createSlice({
+const boardSlice = createSlice({ //learn about createSlice in redux
     name : "board",
     initialState : object, 
     reducers : {
@@ -27,7 +30,7 @@ const boardSlice = createSlice({
             //     return {
             //         payload : newobject
             //     }
-            // }
+            // } 
         }
         ,
         highlighter(state, action){
@@ -54,5 +57,5 @@ const boardSlice = createSlice({
 });
 
 
-export default boardSlice.reducer;
-export const {highlighter, inputnumsetter, countincrement, updateobject,initiate} = boardSlice.actions;
+export default boardSlice.reducer; //export the reducers
+export const {highlighter, inputnumsetter, countincrement, updateobject,initiate} = boardSlice.actions; //export the action creators

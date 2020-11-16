@@ -16,22 +16,23 @@ window.isup.on("onlineusers", allusers => {
   store.dispatch(onlineusers(allusers))
 })
 
-// window.io.on("heyclient", data => alert(data));
-// window.io.on("getinitiated", initialobj => {
-//         store.dispatch(initiate(initialobj));
-//     })
+window.io.on("heyclient", data => alert(data));
+window.io.on("getinitiated", initialobj => {
+        alert("here")
+        store.dispatch(initiate(initialobj));
+    })
 
-// window.io.on("havenumbers", object => {
-//         console.log("dispatching updateobject")
-//         store.dispatch(updateobject(object)); //whenever a new object arrives form server, tell the store to update its state
-//          })
-// window.io.on("inputnumchanged", object => {
-//   store.dispatch(updateobject(object))
-// })
+window.io.on("havenumbers", object => {
+        console.log("dispatching updateobject")
+        store.dispatch(updateobject(object)); //whenever a new object arrives form server, tell the store to update its state
+         })
+window.io.on("inputnumchanged", object => {
+  store.dispatch(updateobject(object))
+})
 
-// window.io.on("mistakes", mistake => {
-//   store.dispatch(mistakes(mistake))}
-//    )
+window.io.on("mistakes", mistake => {
+  store.dispatch(mistakes(mistake))}
+   )
 
 ReactDOM.render(
   <React.StrictMode>

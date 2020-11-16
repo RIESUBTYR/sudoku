@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import Cellstyles from "./cell.module.scss"; //'scss module', not a normal scss file
-import {useSelector, useDispatch} from 'react-redux' //using Redux inside react components
-import { countincrement} from "./boardSlice"; //importing 'redux action creators' corresponding to the reducers in boardSlice file. 
+import Cellstyles from "./cell.module.scss";
+import {useSelector, useDispatch} from 'react-redux' 
+import { countincrement} from "./boardSlice"; 
 
 
 
@@ -18,7 +18,8 @@ export default function Cell(props) {
 
     const clientid = useSelector(state => state.board.clientid);
      const highlightcell = () => {
-        window.io.emit("highlightcell", cellid);
+        console.log("emitting highlightcell")
+        window.io.emit("cellhighlight", cellid)
     }
 
     const hightlightedcell = useSelector(state => state.board.highlightedcell);

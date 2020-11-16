@@ -1,13 +1,16 @@
+
+
+
 import React , {useState, useEffect} from 'react'
 import Cell from "./cell";
-import Boardstyles from "./board.module.scss"
-import {useSelector,useDispatch} from "react-redux";
+import Boardstyles from "./board.module.scss"  //'scss module', not a normal scss file. Learn difference between scss/css file and scss/css module in react
+import {useSelector,useDispatch} from "react-redux"; //we need these two hooks to use Redux inside react components
 
 export default function Board() {
 
     
-    const initialarray = useSelector(state => state.board.initialarray)
-    const issolved = useSelector(state => state.board.issolved); //selecting data from redux store
+    const initialarray = useSelector(state => state.board.initialarray) //selecting data from redux store
+    const issolved = useSelector(state => state.board.issolved); 
     const clientid = useSelector(state=> state.board.clientid)
 
     useEffect(() => {
@@ -16,8 +19,8 @@ export default function Board() {
     } ); //useEffect hook 
 
     useEffect(() => {
-            // window.io.emit("initiateme"); //Emit event to get the initial object from server
-    },[]) //this will run exactly once .
+            window.io.emit("initiateme"); //Emit event to get the initial object from server
+    },[]) // the [] will make sure this hook will run exactly once that is after the component mounts
     
 
     var allcells = [], key=0;
@@ -39,7 +42,8 @@ export default function Board() {
     return (
         //learn about css/scss modules and how to use them in react
         <div className={Boardstyles.board} >
-            {allcells}
+            {allcells} 
         </div>
+        // learn about list rendering in react
     )
 }

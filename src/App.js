@@ -20,17 +20,17 @@ function App() {
     dispatch(showmistake())
   }
 
-  const isgameon = useSelector(state => state.games.isgameon)
+  // const isgameon = useSelector(state => state.games.isgameon)
   const isinside = useSelector(state => state.games.isinside)
   var boardoverlay, inputnumbers, roomoverlay
   if(isinside){
-     boardoverlay = isgameon ? null : (<div className={Appstyles.overlay}>
-            <Boardoverlay />
-            </div> )
-    inputnumbers = isgameon ? (<div className={Appstyles.gamecontrol}>
+    //  boardoverlay = isgameon ? null : (<div className={Appstyles.overlay}>
+    //         <Boardoverlay />
+    //         </div> )
+    inputnumbers = <div className={Appstyles.gamecontrol}>
           <Inputnums/>
           <button onClick={handleclick} >Show mistakes</button>
-          </div> ): null;
+          </div> 
 
   }
   else {
@@ -49,10 +49,11 @@ function App() {
           <div className={Appstyles.gamearea}>
           <div className={Appstyles.boardandoverlay}>
             {roomoverlay}
-            {boardoverlay}
             <Board/>
           </div>
-            {inputnumbers}
+           <div className={Appstyles.gamecontrol}>
+          {inputnumbers}
+          </div>
           </div>
           <div className={Appstyles.sidediv}>
            <Onlineusers/>
