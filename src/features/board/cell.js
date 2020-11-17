@@ -32,7 +32,7 @@ export default function Cell(props) {
         var element = document.getElementById(cellid);
         const clientids = hightlightedcell.filter((e) => { //clientids is an array of objects
         return e.cellid == cellid
-        }); 
+        }); //array.filter in js . 
         const clientsarray = clientids.map(e => {
             return e.clientid
         })//extract only the clientids and store them in an array

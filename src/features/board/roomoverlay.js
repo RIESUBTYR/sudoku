@@ -14,7 +14,7 @@ export default function Roomoverlay() {
         const name = document.getElementById("name").value
         if(!name)
             return;
-        window.isup.emit("entername", name)
+        window.io.emit("roomentered", name)
         dispatch(isinside())
     }
     return (

@@ -6,7 +6,7 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import {initiate, updateobject} from "./features/board/boardSlice";
-import {onlineusers} from "./features/gamecontrols/gamesSlice"
+import {onlineusers, competitors} from "./features/gamecontrols/gamesSlice"
 import {mistakes} from "./features/board/resultReducer"
 import socket from "socket.io-client";
 import {hitpoint} from "./features/board/boardSlice"
@@ -33,6 +33,13 @@ window.io.on("inputnumchanged", object => {
 window.io.on("mistakes", mistake => {
   store.dispatch(mistakes(mistake))}
    )
+
+window.io.on("wait", () => alert("wait for some time"))
+window.io.on("gamestarted", (thisplayer, otherplayers) => {
+  store.dispatch(updateobject(thisplayer))
+  store.dispatch(competitors(otherplayers))
+} )
+
 
 ReactDOM.render(
   <React.StrictMode>

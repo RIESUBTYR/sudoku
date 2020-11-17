@@ -1,7 +1,7 @@
 const object = { initialarray: [
   [
+    [ 9, 1, 0, 0 ], //1st element - number in the cell . 2nd - visibility . 3rd - the number entered by the player . 4th - no use as of now. 
     [ 7, 1, 0, 0 ],
-    [ 9, 1, 0, 0 ],
     [ 2, 1, 0, 0 ],
     [ 4, 0, 0, 0 ],
     [ 8, 1, 0, 0 ],

@@ -11,6 +11,7 @@ import Header from "./features/header/header"
 import Boardoverlay from "./features/board/boardoverlay"
 import Roomoverlay from "./features/board/roomoverlay"
 import Onlineusers from "./features/gamecontrols/onlineusers"
+import Competitors from "./features/gamecontrols/competitors"
 
 
 
@@ -57,6 +58,7 @@ function App() {
           </div>
           <div className={Appstyles.sidediv}>
            <Onlineusers/>
+           <Competitors/>
           </div>
         </div>
       </Route>

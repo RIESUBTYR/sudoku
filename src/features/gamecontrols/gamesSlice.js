@@ -6,7 +6,8 @@ import { initiate } from "../board/boardSlice";
 const initial = {
     isinside : 0,
     isgameon : 0,
-    onlineusers : []
+    onlineusers : [],
+    competitors : []
 }
 
 const gamesSlice = createSlice({
@@ -33,9 +34,12 @@ const gamesSlice = createSlice({
                     payload : allplayers
                 }
             }
+        },
+        competitors : (state, action) => {
+            state.competitors = Object.values(action.payload)
         }
     }
 });
 
 export default gamesSlice.reducer;
-export const {isgameon, isinside, onlineusers} = gamesSlice.actions;
+export const {isgameon, isinside, onlineusers, competitors} = gamesSlice.actions;
