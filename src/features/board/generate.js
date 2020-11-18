@@ -8,7 +8,7 @@ var sq={
 
 function randomInt(min,max)
 {
-    return min+ Math.floor((max-min) *  Math.random());
+    return min+ Math.floor((max+1-min) *  Math.random());
 }
 
 function getAcross(n)
@@ -75,7 +75,7 @@ function Item(n,v)
 
 function Conflicts(currentValues , test)
 {
-    console.log(test);
+   // console.log(test);
     for(s in currentValues)
     {
         if( (s.Across!=0 && s.Across==test.Across) ||  (s.Down!=0 && s.Down==test.Down) ||  (s.Region!=0 && s.Region==test.Region))
@@ -112,6 +112,7 @@ function generate()
          if(Available[c].length!=0)
         {
              var i=randomInt(0,Available[c].length);
+             //console.log(i);
              var z=Available[c][i];
              if(Conflicts(square,Item(c,z))==false)
              {
@@ -133,7 +134,7 @@ function generate()
         }
     }
 
-    
+    console.log(square);
     var grid=new Array(9);
 /*
     for(var i=0;i<9;i++)
