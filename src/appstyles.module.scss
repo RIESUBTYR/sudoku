@@ -1,9 +1,61 @@
+@import "./features/board/variables.scss";
+
 .parentcontainer {
+  background-color: rgb(53, 0, 53);
+  min-height: 100vh;
+  font-family: "Josefin Sans", sans-serif;
+  padding-top: 20px;
+}
+
+.secondparent {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+.sidediv {
+  background-color: black;
+  height: fit-content;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .secondparent {
+    display: block;
+  }
+}
+
+.gamearea {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  flex-wrap: wrap;
   > * {
-    margin: 30px;
+    margin: 10px 30px 10px;
+  }
+  .gamecontrol {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      padding: 10px;
+      background-color: rgb(107, 6, 6);
+      border: 0px;
+      color: white;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: rgb(150, 0, 0);
+    }
+  }
+  .boardandoverlay {
+    position: relative;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(160, 160, 160, 0.93);
   }
 }

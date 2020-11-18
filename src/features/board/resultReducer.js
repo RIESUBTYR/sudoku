@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit"
 const initial = {
     mistakes : [],
     issolved : 0,
-    showmistake : 0
+    showmistake : 0 
 }
 
 const resultSlice = createSlice({
@@ -14,7 +14,7 @@ const resultSlice = createSlice({
             state.mistakes = action.payload
         },
         showmistake: (state) => {
-            state.showmistake++
+            state.showmistake++ 
         }
     }
 })

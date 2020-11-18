@@ -6,11 +6,19 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import {initiate, updateobject} from "./features/board/boardSlice";
+import {onlineusers} from "./features/gamecontrols/gamesSlice"
 import {mistakes} from "./features/board/resultReducer"
+import socket from "socket.io-client";
+import {hitpoint} from "./features/board/boardSlice"
+window.isup = socket(`${hitpoint}/online`);
 
+window.isup.on("onlineusers", allusers => {
+  store.dispatch(onlineusers(allusers))
+})
 
 window.io.on("heyclient", data => alert(data));
 window.io.on("getinitiated", initialobj => {
+        alert("here")
         store.dispatch(initiate(initialobj));
     })
 

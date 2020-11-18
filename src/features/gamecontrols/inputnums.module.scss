@@ -14,7 +14,7 @@
   color: rgb(211, 211, 211);
   height: $onenumdimension;
   width: $onenumdimension;
-  padding: 5px;
+  padding: 15px;
   box-sizing: border-box;
   font-size: large;
   text-align: center;
@@ -23,4 +23,17 @@
 .onenum:hover {
   background-color: rgb(176, 224, 243);
   color: black;
+}
+
+@media screen and (max-width: 600px) {
+  .allnums {
+    grid-template-columns: repeat(3, $onenumdimension2);
+    grid-template-rows: repeat(3, $onenumdimension2);
+  }
+  .onenum {
+    height: $onenumdimension2;
+    width: $onenumdimension2;
+    padding: 12px;
+    font-size: 15px;
+  }
 }
