@@ -5,7 +5,7 @@ import Inputnums from "./features/gamecontrols/inputnums"
 import Appstyles from "./appstyles.module.scss";
 import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {showmistake} from "./features/board/resultReducer"
+import {makeavailable, showmistake} from "./features/board/resultReducer"
 import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom"
 import Header from "./features/header/header"
 import Boardoverlay from "./features/board/boardoverlay"
@@ -18,11 +18,16 @@ import Competitors from "./features/gamecontrols/competitors"
 function App() {
   const dispatch = useDispatch()
   const handleclick = () => {
+    setTimeout(makevisible, 10000)
     dispatch(showmistake())
   }
+   const makevisible = () => {
+     dispatch(makeavailable())
+   }
 
   // const isgameon = useSelector(state => state.games.isgameon)
   const isinside = useSelector(state => state.games.isinside)
+  const isavailable  = useSelector(state => state.result.isavailable)
   var boardoverlay, inputnumbers, roomoverlay
   if(isinside){
     //  boardoverlay = isgameon ? null : (<div className={Appstyles.overlay}>
@@ -30,7 +35,7 @@ function App() {
     //         </div> )
     inputnumbers = <div className={Appstyles.gamecontrol}>
           <Inputnums/>
-          <button onClick={handleclick} >Show mistakes</button>
+          <button class={isavailable ? null : Appstyles.disabledbutton} onClick={ isavailable ? handleclick : null} >Show mistakes</button>
           </div> 
 
   }

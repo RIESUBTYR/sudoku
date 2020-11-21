@@ -3,7 +3,8 @@ import {createSlice} from "@reduxjs/toolkit"
 const initial = {
     mistakes : [],
     issolved : 0,
-    showmistake : 0 
+    showmistake : 0,
+    isavailable : 1
 }
 
 const resultSlice = createSlice({
@@ -15,9 +16,14 @@ const resultSlice = createSlice({
         },
         showmistake: (state) => {
             state.showmistake++ 
+            state.isavailable = 0
+        },
+        makeavailable : (state) => {
+            state.isavailable = 1
         }
+      
     }
 })
 
 export default resultSlice.reducer
-export const {mistakes, showmistake} = resultSlice.actions
+export const {mistakes, showmistake, makeavailable} = resultSlice.actions

@@ -10,7 +10,8 @@ export default function Inputnums() {
     const handleclick = (e) => {
         const value = e.target.innerHTML;
         window.io.emit("inputnum", value);
-        window.io.emit("check", value );
+        dispatch(inputnumsetter(value))
+        // window.io.emit("check", value );
     }
     var nums = [];
     for(var i=1;i<10;i++)

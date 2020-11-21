@@ -6,8 +6,8 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import {initiate, updateobject} from "./features/board/boardSlice";
-import {onlineusers, competitors} from "./features/gamecontrols/gamesSlice"
 import {mistakes} from "./features/board/resultReducer"
+import {onlineusers, competitors} from "./features/gamecontrols/gamesSlice"
 import socket from "socket.io-client";
 import {hitpoint} from "./features/board/boardSlice"
 window.isup = socket(`${hitpoint}/online`);
@@ -23,12 +23,8 @@ window.io.on("getinitiated", initialobj => {
     })
 
 window.io.on("havenumbers", object => {
-        console.log("dispatching updateobject")
         store.dispatch(updateobject(object)); //whenever a new object arrives form server, tell the store to update its state
          })
-window.io.on("inputnumchanged", object => {
-  store.dispatch(updateobject(object))
-})
 
 window.io.on("mistakes", mistake => {
   store.dispatch(mistakes(mistake))}
@@ -39,6 +35,16 @@ window.io.on("gamestarted", (thisplayer, otherplayers) => {
   store.dispatch(updateobject(thisplayer))
   store.dispatch(competitors(otherplayers))
 } )
+var count = 0, allmistakes = [];
+window.io.on("oneset", data => {
+    count++ ;
+    allmistakes = allmistakes.concat(data.oneset)
+    if(count == 3){
+      store.dispatch(mistakes(allmistakes))
+      count = 0
+      allmistakes = []
+    }
+})
 
 
 ReactDOM.render(

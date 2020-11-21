@@ -45,6 +45,17 @@
     button:hover {
       background-color: rgb(150, 0, 0);
     }
+    .disabledbutton {
+      background-color: grey;
+    }
+    .disabledbutton:hover {
+      background-color: grey;
+    }
+    .disabledbutton:focus,
+    button:focus {
+      outline: none;
+      box-shadow: none;
+    }
   }
   .boardandoverlay {
     position: relative;

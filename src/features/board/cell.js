@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Cellstyles from "./cell.module.scss";
 import {useSelector, useDispatch} from 'react-redux' 
-import { countincrement} from "./boardSlice"; 
+import { highlighter} from "./boardSlice"; 
 
 
 
@@ -15,10 +15,10 @@ export default function Cell(props) {
     bottomborder = Cellstyles.bottomborder;
     var elementtorender;
 
-
+    const dispatch = useDispatch()
     const clientid = useSelector(state => state.board.clientid);
      const highlightcell = () => {
-        console.log("emitting highlightcell")
+        dispatch(highlighter(cellid))
         window.io.emit("cellhighlight", cellid)
     }
 
@@ -68,7 +68,7 @@ export default function Cell(props) {
             element.classList.add(Cellstyles.mistake)
         }
         setTimeout(clearmistake, 2000)
-    },[showmistake])
+    },[showmistake, mistakes])
 
     const clearmistake = () => {
         document.getElementById(cellid).classList.remove(Cellstyles.mistake)
