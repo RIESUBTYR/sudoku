@@ -35,6 +35,9 @@ window.io.on("gamestarted", (thisplayer, otherplayers) => {
   store.dispatch(updateobject(thisplayer))
   store.dispatch(competitors(otherplayers))
 } )
+window.io.on("changedcount", otherplayers => {
+  store.dispatch(competitors(otherplayers))
+} )
 var count = 0, allmistakes = [];
 window.io.on("oneset", data => {
     count++ ;

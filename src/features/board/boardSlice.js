@@ -46,12 +46,31 @@ const boardSlice = createSlice({ //learn about createSlice in redux
             }
         },
         inputnumsetter(state, action){
-            const inputnum = action.payload;
+            const inputnum = parseInt(action.payload);
             if(state.highlightedcell.length == 0)
                 return state
             else{
                 const cellid = state.highlightedcell[0].cellid
                 state.initialarray[Math.floor(cellid/10) - 1][cellid%10 - 1][2] = inputnum
+
+                var flag =  state.initialarray[Math.floor(cellid/10) - 1][cellid%10 - 1][3]
+                var correctvalue =  state.initialarray[Math.floor(cellid/10) - 1][cellid%10 - 1][0]
+                var correctcount = state.correctcount
+
+                if(correctvalue == inputnum){
+                    if(flag == 0){
+                        state.correctcount++
+                        state.initialarray[Math.floor(cellid/10) - 1][cellid%10 - 1][3] = 1
+                        if(state.requiredcorrect == correctcount + 1)
+                            state.issolved = 1
+                    }
+                }
+                else{
+                    if(flag == 1){
+                        state.correctcount--
+                        state.initialarray[Math.floor(cellid/10) - 1][cellid%10 - 1][3] = 0
+                    }
+                }
             }
         },
 

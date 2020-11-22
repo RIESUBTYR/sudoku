@@ -9,15 +9,35 @@
     padding: 8px;
   }
 
-  > div {
+  .oneplayer {
+    display: flex;
+    justify-content: flex-end;
+    width: 500px;
     margin: 5px;
-    background-color: rgb(0, 0, 0);
-    border-bottom: 1px solid grey;
-    color: white;
+    background-color: rgb(255, 255, 255);
+    color: black;
     padding: 5px;
     font-size: 15px;
     box-sizing: border-box;
   }
+  .names {
+    width: fit-content;
+  }
+  .barwrapper {
+    position: relative;
+    height: 20px;
+    width: 200px;
+    border: 1px solid rgb(48, 48, 48);
+    .innerbar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 0;
+      z-index: 10;
+    }
+  }
+
   .nousers {
     background-color: black;
     color: white;

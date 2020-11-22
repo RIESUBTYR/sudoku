@@ -28,6 +28,7 @@ function App() {
   // const isgameon = useSelector(state => state.games.isgameon)
   const isinside = useSelector(state => state.games.isinside)
   const isavailable  = useSelector(state => state.result.isavailable)
+  const isgameon = useSelector(state => state.games.isgameon)
   var boardoverlay, inputnumbers, roomoverlay
   if(isinside){
     //  boardoverlay = isgameon ? null : (<div className={Appstyles.overlay}>
@@ -44,7 +45,10 @@ function App() {
             <Roomoverlay />
             </div>
   }
- 
+  var competitors
+  if(isgameon){
+    competitors = <Competitors/>
+  }
   return (
     <Router>
     <Header/>
@@ -62,8 +66,7 @@ function App() {
           </div>
           </div>
           <div className={Appstyles.sidediv}>
-           <Onlineusers/>
-           <Competitors/>
+           {competitors}
           </div>
         </div>
       </Route>

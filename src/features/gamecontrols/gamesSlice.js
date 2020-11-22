@@ -37,6 +37,7 @@ const gamesSlice = createSlice({
         },
         competitors : (state, action) => {
             state.competitors = Object.values(action.payload)
+            state.isgameon = 1
         }
     }
 });
