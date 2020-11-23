@@ -12,6 +12,7 @@ import Boardoverlay from "./features/board/boardoverlay"
 import Roomoverlay from "./features/board/roomoverlay"
 import Onlineusers from "./features/gamecontrols/onlineusers"
 import Competitors from "./features/gamecontrols/competitors"
+import Finishedplayers from "./features/gamecontrols/finishedplayers"
 
 
 
@@ -29,7 +30,16 @@ function App() {
   const isinside = useSelector(state => state.games.isinside)
   const isavailable  = useSelector(state => state.result.isavailable)
   const isgameon = useSelector(state => state.games.isgameon)
+  const issolved = useSelector(state => state.board.issolved); 
+
+  useEffect(() => {
+        if(issolved){
+          window.io.emit("gamesolved");
+        }
+  }, [issolved] ); //useEffect hook 
+
   var boardoverlay, inputnumbers, roomoverlay
+
   if(isinside){
     //  boardoverlay = isgameon ? null : (<div className={Appstyles.overlay}>
     //         <Boardoverlay />
@@ -45,9 +55,10 @@ function App() {
             <Roomoverlay />
             </div>
   }
-  var competitors
+  var competitors, finishedplayers
   if(isgameon){
     competitors = <Competitors/>
+    finishedplayers = <Finishedplayers/>
   }
   return (
     <Router>
@@ -66,6 +77,7 @@ function App() {
           </div>
           </div>
           <div className={Appstyles.sidediv}>
+           {finishedplayers}
            {competitors}
           </div>
         </div>

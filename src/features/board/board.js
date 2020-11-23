@@ -10,13 +10,8 @@ export default function Board() {
 
     
     const initialarray = useSelector(state => state.board.initialarray) //selecting data from redux store
-    const issolved = useSelector(state => state.board.issolved); 
     const clientid = useSelector(state=> state.board.clientid)
 
-    useEffect(() => {
-        if(issolved)
-            alert("Congrats! You are a great team!");
-    } ); //useEffect hook 
 
     useEffect(() => {
             window.io.emit("initiateme"); //Emit event to get the initial object from server

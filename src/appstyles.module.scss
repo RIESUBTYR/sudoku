@@ -12,9 +12,13 @@
   grid-template-columns: 5fr 1fr;
 }
 .sidediv {
-  background-color: black;
+  // background-color: black;
   height: fit-content;
   margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 900px) {

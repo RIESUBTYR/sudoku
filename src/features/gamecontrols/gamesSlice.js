@@ -7,7 +7,8 @@ const initial = {
     isinside : 0,
     isgameon : 0,
     onlineusers : [],
-    competitors : []
+    competitors : [],
+    finishedplayers : []
 }
 
 const gamesSlice = createSlice({
@@ -38,9 +39,12 @@ const gamesSlice = createSlice({
         competitors : (state, action) => {
             state.competitors = Object.values(action.payload)
             state.isgameon = 1
+        },
+        finishedplayers : (state, action) => {
+            state.finishedplayers = Object.values(action.payload)
         }
     }
 });
 
 export default gamesSlice.reducer;
-export const {isgameon, isinside, onlineusers, competitors} = gamesSlice.actions;
+export const {isgameon, isinside, onlineusers, competitors, finishedplayers} = gamesSlice.actions;

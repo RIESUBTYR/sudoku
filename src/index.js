@@ -10,6 +10,10 @@ import {mistakes} from "./features/board/resultReducer"
 import {onlineusers, competitors} from "./features/gamecontrols/gamesSlice"
 import socket from "socket.io-client";
 import {hitpoint} from "./features/board/boardSlice"
+import {finishedplayers} from "./features/gamecontrols/gamesSlice"
+
+
+
 window.isup = socket(`${hitpoint}/online`);
 
 window.isup.on("onlineusers", allusers => {
@@ -47,6 +51,10 @@ window.io.on("oneset", data => {
       count = 0
       allmistakes = []
     }
+})
+
+window.io.on("finishedplayers", fplayers => {
+  store.dispatch(finishedplayers(fplayers))
 })
 
 
