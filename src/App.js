@@ -13,13 +13,15 @@ import Roomoverlay from "./features/board/roomoverlay"
 import Onlineusers from "./features/gamecontrols/onlineusers"
 import Competitors from "./features/gamecontrols/competitors"
 import Finishedplayers from "./features/gamecontrols/finishedplayers"
+import { wait } from '@testing-library/react';
 
 
 
 function App() {
   const dispatch = useDispatch()
+  var waittime = 10000
   const handleclick = () => {
-    setTimeout(makevisible, 10000)
+    setTimeout(makevisible, waittime)
     dispatch(showmistake())
   }
    const makevisible = () => {
@@ -39,6 +41,18 @@ function App() {
   }, [issolved] ); //useEffect hook 
 
   var boardoverlay, inputnumbers, roomoverlay
+  var interval
+  useEffect(() => {
+    if(isavailable == 0)
+      interval = setInterval(reducetime, 1000)
+  })
+  const reducetime = () => {
+    var ele = document.getElementById("mistakebutton")
+    var value = ele.innerHTML
+    ele.innerHTML = --value 
+    if(value == 1)
+      clearInterval(interval)
+  }
 
   if(isinside){
     //  boardoverlay = isgameon ? null : (<div className={Appstyles.overlay}>
@@ -46,7 +60,7 @@ function App() {
     //         </div> )
     inputnumbers = <div className={Appstyles.gamecontrol}>
           <Inputnums/>
-          <button class={isavailable ? null : Appstyles.disabledbutton} onClick={ isavailable ? handleclick : null} >Show mistakes</button>
+  <button id="mistakebutton" class={isavailable ? null : Appstyles.disabledbutton} onClick={ isavailable ? handleclick : null} >{isavailable ? "Show Mistakes": waittime/1000 }</button>
           </div> 
 
   }

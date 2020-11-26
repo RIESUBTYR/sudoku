@@ -51,6 +51,8 @@ const boardSlice = createSlice({ //learn about createSlice in redux
                 return state
             else{
                 const cellid = state.highlightedcell[0].cellid
+                if(!state.initialarray[Math.floor(cellid/10) - 1][cellid%10 - 1][2])
+                    state.filledcount++
                 state.initialarray[Math.floor(cellid/10) - 1][cellid%10 - 1][2] = inputnum
 
                 var flag =  state.initialarray[Math.floor(cellid/10) - 1][cellid%10 - 1][3]

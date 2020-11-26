@@ -7,7 +7,7 @@ import { highlighter} from "./boardSlice";
 
 export default function Cell(props) {
     const {i,j} = props; //destructuring  object
-    const [value, visibility, inputnum, isright] = props.cellinfo; //destructuring array
+    const [value, visibility, inputnum] = props.cellinfo; //destructuring array
     const cellid = (i*10)+j; //a two digit integer
     var rightborder, bottomborder;
     const {right, bottom} = props.borderinfo; //destructuring
@@ -61,14 +61,24 @@ export default function Cell(props) {
         }
     })
 
+    // useEffect(() => {
+    //     var element = document.getElementById(cellid);
+    //     if(showmistake){
+    //     if(mistakes.includes(cellid,0))
+    //         element.classList.add(Cellstyles.mistake)
+    //     }
+    //     setTimeout(clearmistake, 2000)
+    // },[showmistake, mistakes])
+
     useEffect(() => {
-        var element = document.getElementById(cellid);
-        if(showmistake){
-        if(mistakes.includes(cellid,0))
-            element.classList.add(Cellstyles.mistake)
+        var element = document.getElementById(cellid)
+        if(inputnum){
+            if(inputnum != value){
+                element.classList.add(Cellstyles.mistake)
+            }
+            setTimeout(clearmistake, 2000)
         }
-        setTimeout(clearmistake, 2000)
-    },[showmistake, mistakes])
+    },[showmistake])
 
     const clearmistake = () => {
         document.getElementById(cellid).classList.remove(Cellstyles.mistake)

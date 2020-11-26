@@ -7,10 +7,9 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import {initiate, updateobject} from "./features/board/boardSlice";
 import {mistakes} from "./features/board/resultReducer"
-import {onlineusers, competitors} from "./features/gamecontrols/gamesSlice"
+import {onlineusers, competitors, finishedplayers, remtime, waitmode, gamemode, prevgamended} from "./features/gamecontrols/gamesSlice"
 import socket from "socket.io-client";
 import {hitpoint} from "./features/board/boardSlice"
-import {finishedplayers} from "./features/gamecontrols/gamesSlice"
 
 
 
@@ -34,7 +33,16 @@ window.io.on("mistakes", mistake => {
   store.dispatch(mistakes(mistake))}
    )
 
-window.io.on("wait", () => alert("wait for some time"))
+window.io.on("wait", () => {
+  store.dispatch(waitmode())
+})
+window.io.on("refreshpage" , () => {
+  store.dispatch(prevgamended())
+})
+window.io.on("accepted", () => {
+  store.dispatch(gamemode())
+})
+
 window.io.on("gamestarted", (thisplayer, otherplayers) => {
   store.dispatch(updateobject(thisplayer))
   store.dispatch(competitors(otherplayers))
@@ -56,6 +64,10 @@ window.io.on("oneset", data => {
 window.io.on("finishedplayers", fplayers => {
   store.dispatch(finishedplayers(fplayers))
 })
+
+window.io.on("timerem", timerem => {
+  store.dispatch(remtime(timerem))
+} )
 
 
 ReactDOM.render(
