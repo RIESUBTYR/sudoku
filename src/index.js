@@ -15,10 +15,12 @@ import {hitpoint} from "./features/board/boardSlice"
 
 window.isup = socket(`${hitpoint}/online`);
 
+
 window.isup.on("onlineusers", allusers => {
   store.dispatch(onlineusers(allusers))
 })
 
+window.io.on("disconnect", () => alert("The game is over. Refresh the page to play another game"))
 window.io.on("heyclient", data => alert(data));
 window.io.on("getinitiated", initialobj => {
         alert("here")

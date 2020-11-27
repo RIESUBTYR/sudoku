@@ -22,7 +22,7 @@ export default function Competitors() {
         Array.from(allbars).forEach(e => {
             var progress = e.getAttribute("data-filledcount")
             console.log(progress)
-            e.style.width = `${progress/requiredcorrect * 150}px`
+            e.style.width = `${progress/requiredcorrect * 100}%`
         })
     })
 
