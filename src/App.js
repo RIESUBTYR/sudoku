@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {makeavailable, showmistake} from "./features/board/resultReducer"
 import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom"
 import Header from "./features/header/header"
+import Instructions from "./features/header/instructions"
 import Boardoverlay from "./features/board/boardoverlay"
 import Roomoverlay from "./features/board/roomoverlay"
 import Onlineusers from "./features/gamecontrols/onlineusers"
@@ -94,6 +95,7 @@ function App() {
            {finishedplayers}
            {competitors}
           </div>
+          <Instructions/>
         </div>
       </Route>
       <Route path="/documentation">
