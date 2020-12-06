@@ -16,10 +16,8 @@ export default function Instructions() {
                 <li>The progress bar of a player will be filled even if he enters a wrong value in one of the cells</li>
                 <li>The game will be solved only if all the values entered are correct values</li>
                 <li>Make smart use of the 'Show Mistakes' button. You can use it to find the value for 
-a cell. Pressing the button will reveal all those cells in which wrong values are entered. </li>
-                <li>For example, if you know for sure that a cell can only have one of 3,5,8 as the right value,
-then you can press Show Mistakes after entering each of those three values. The value for which no 
-red mark was shown after pressing Show Mistakes is the right value for the cell. </li>
+ cells. Pressing the button will reveal all those cells in which wrong values are entered. </li>
+                <li>For example, if there are only two cells that have to be filled in a row/column/box and you dont know for sure the correct value for each of those two cells, then you can simply enter one remaining value in one of the cells and the other remaining value in the other cell and press the showmistakes button. If you see red marks in those two cells, then flip the values among those two cells. Now you have filled the entire row/column/box correctly. </li>
                 <li>Since you can find the value for a cell by using the Show Mistakes button
 alone and completely neglecting the rest of the corresponding row, column or box there
 is a limitation placed for the usage of the button .i.e once you click the button, you will have to
