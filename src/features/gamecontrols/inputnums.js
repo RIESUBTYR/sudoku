@@ -9,7 +9,7 @@ export default function Inputnums() {
 
     const handleclick = (e) => {
         const value = e.target.innerHTML;
-        window.io.emit("inputnum", value);
+        // window.io.emit("inputnum", value);
         dispatch(inputnumsetter(value))
         // window.io.emit("check", value );
     }

@@ -17,9 +17,9 @@ export default function Cell(props) {
 
     const dispatch = useDispatch()
     const clientid = useSelector(state => state.board.clientid);
-     const highlightcell = () => {
+    const highlightcell = () => {
         dispatch(highlighter(cellid))
-        window.io.emit("cellhighlight", cellid)
+        // window.io.emit("cellhighlight", cellid)
     }
 
     const hightlightedcell = useSelector(state => state.board.highlightedcell);

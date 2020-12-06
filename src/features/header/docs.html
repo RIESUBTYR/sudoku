@@ -1,0 +1,226 @@
+<body class="c15">
+    <h1 class="c17" id="h.1lr7f1vnr511"><span class="c7 c16">Reduxoku - &nbsp;Seamless Real time Multiplayer
+            Sudoku</span></h1>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">The team behind Reduxoku is a group of students from IIITDM Kancheepuram , batch
+            of 2022/2023 . And Reduxoku was built as a project for one of our courses here in college. </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <h3 class="c14" id="h.rjnx1unswafk"><span class="c6">Why the name ‘Reduxoku’ ?</span></h3>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">It is because Redux.js is used in building and implementing a UI for the app.
+        </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <h3 class="c14" id="h.dvka36vd9o7c"><span class="c6">Technologies used in Reduxoku</span></h3>
+    <p class="c11"><span class="c9 c7">React Hooks, Redux for state management, Socket-io Client module to communicate
+            back and forth with the backend-server in realtime. No CSS framework/library is used in the project. All the
+            styles are written from scratch. </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">The back-end for the app is a Node.js server . It uses Express and Socket.io
+            modules . Three child processes created using the &nbsp;node js Child_Process module also run along with the
+            main process. The child processes are created to do some heavy lifting off the main process the explanation
+            of which will come later in the docs. </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <h3 class="c14" id="h.e294552ee1qg"><span class="c6">How the data flows in the app</span></h3>
+    <p class="c11"><span class="c7 c9">The socket in the client side emits multiple events and each event has a unique
+            name. The socket also sends some data when it emits these events. </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">The socket.io module in the server will be listening for these events. When an
+            event is emitted by the client, the server takes the data, does some job and emits an event in response
+            along with the response data. </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">The following is a snippet from the client side code . The function
+            ‘highlightcell’ will be called when a player clicks on one of the 81 cells. The cells have ids whose pattern
+            is 11, 12...19,21,22…...99 . The function will emit the socket.io event named ‘cellhighlight’ along with the
+            cellid of the cell which was clicked on by the player. &nbsp;</span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c0"><span class="c12">const</span><span class="c4">&nbsp;</span><span class="c8">clientid</span><span
+            class="c4">&nbsp;= </span><span class="c3">useSelector</span><span class="c4">(</span><span
+            class="c1">state</span><span class="c4">&nbsp;</span><span class="c12">=&gt;</span><span
+            class="c4">&nbsp;</span><span class="c1">state</span><span class="c4">.</span><span
+            class="c1">board</span><span class="c4">.</span><span class="c1">clientid</span><span
+            class="c4 c7">);</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; </span><span class="c12">const</span><span
+            class="c4">&nbsp;</span><span class="c3">highlightcell</span><span class="c4">&nbsp;= () </span><span
+            class="c12">=&gt;</span><span class="c4 c7">&nbsp;{</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c3">dispatch</span><span
+            class="c4">(</span><span class="c3">highlighter</span><span class="c4">(</span><span
+            class="c8">cellid</span><span class="c4 c7">))</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c1">window</span><span
+            class="c4">.</span><span class="c1">io</span><span class="c4">.</span><span class="c3">emit</span><span
+            class="c4">(</span><span class="c5">"cellhighlight"</span><span class="c4">, </span><span
+            class="c8">cellid</span><span class="c4 c7">)</span></p>
+    <p class="c0"><span class="c4 c7">&nbsp; &nbsp; }</span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">The following snippet is from the server-side code . The server listens to the
+            ‘cellhighlight’ event emitted by the client, and passes the data which is the cellid to the function. The
+            function will send the cellid along with the socketid to the three child processes. Note that, every player
+            will have one socket connection with the server, and each socket has an unique id . Therefore we can
+            uniquely identify each player by the socket id . The child processes are now provided with the data about
+            which player has selected which cell. </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c0"><span class="c4 c7">&nbsp; </span></p>
+    <p class="c0"><span class="c1">socket</span><span class="c4">.</span><span class="c3">on</span><span
+            class="c4">(</span><span class="c5">"cellhighlight"</span><span class="c4">, (</span><span
+            class="c1">cellid</span><span class="c4">) </span><span class="c12">=&gt;</span><span
+            class="c4 c7">&nbsp;{</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c2">for</span><span
+            class="c4">(</span><span class="c12">var</span><span class="c4">&nbsp;</span><span class="c1">i</span><span
+            class="c4">=</span><span class="c13">0</span><span class="c4">;</span><span class="c1">i</span><span
+            class="c4">&lt;</span><span class="c13">3</span><span class="c4">;</span><span class="c1">i</span><span
+            class="c4 c7">++)</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+            class="c1">allchild</span><span class="c4">[</span><span class="c1">i</span><span class="c4">].</span><span
+            class="c3">send</span><span class="c4">({</span><span class="c1">type :</span><span
+            class="c4">&nbsp;</span><span class="c5">"highlightcell"</span><span class="c4">, </span><span
+            class="c1">socketid :</span><span class="c4">&nbsp;</span><span class="c1">socket</span><span
+            class="c4">.</span><span class="c1">id</span><span class="c4">&nbsp;, </span><span class="c1">cellid
+            :</span><span class="c4">&nbsp;</span><span class="c1">cellid</span><span class="c4 c7">&nbsp;}); </span>
+    </p>
+    <p class="c0"><span class="c4 c7">&nbsp; &nbsp; })</span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <h3 class="c14" id="h.3jld7rw6rqj3"><span class="c6">Offloading using child processes (multiprocessing)</span></h3>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">A crucial point about Node.js servers is that they are single-threaded .i.e
+            whenever a new client requests the server, a new thread will not be created to handle the request, whereas
+            in servers like Apache, a new thread is created for every new client . As for Node.js it uses something
+            called ‘Event-loop’ to respond to all requests quickly even though all requests are handled by only one
+            thread. </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">This will work fine as long as the works done in the main thread are I/O bound
+            and not CPU bound.i.e CPU intensive tasks will block the execution of other tasks in the main thread.
+            Therefore the server will be able to respond to the clients only after the CPU intensive task is completed.
+            Therefore if our app has to do some CPU intensive task then we have to hand over that task to child
+            processes/worker threads so as to not block the main thread and slow down the response time of the app.
+        </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">Since frequently validating user inputs and checking if the Sudoku puzzle has
+            been solved is a CPU intensive task, we are doing it from within child processes(multiprocessing). The child
+            processes will receive necessary data from the main process , do CPU intensive tasks and send back the
+            response data to the main-thread which will send the data back to the clients. &nbsp;</span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span class="c9 c7">The following snippet will create three child processes. </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c0"><span class="c12">const</span><span class="c4">&nbsp;</span><span class="c8">children</span><span
+            class="c4">&nbsp;= </span><span class="c3">require</span><span class="c4">(</span><span
+            class="c5">"child_process"</span><span class="c4">)</span></p>
+    <p class="c0"><span class="c12">var</span><span class="c4">&nbsp;</span><span class="c1">allchild</span><span
+            class="c4 c7">&nbsp;= [];</span></p>
+    <p class="c0"><span class="c2">for</span><span class="c4">(</span><span class="c12">var</span><span
+            class="c4">&nbsp;</span><span class="c1">i</span><span class="c4">=</span><span class="c13">0</span><span
+            class="c4">;</span><span class="c1">i</span><span class="c4">&lt;</span><span class="c13">3</span><span
+            class="c4">;</span><span class="c1">i</span><span class="c4 c7">++){</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; </span><span class="c1">allchild</span><span class="c4">.</span><span
+            class="c3">push</span><span class="c4">(</span><span class="c8">children</span><span
+            class="c4">.</span><span class="c3">fork</span><span class="c4">(</span><span
+            class="c5">"./child.js"</span><span class="c4 c7">));</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; </span><span class="c1">allchild</span><span class="c4">[</span><span
+            class="c1">i</span><span class="c4">].</span><span class="c3">send</span><span class="c4">({</span><span
+            class="c1">type :</span><span class="c4">&nbsp;</span><span class="c5">"initiate"</span><span class="c4">,
+        </span><span class="c1">data:</span><span class="c4">&nbsp;</span><span class="c8">object</span><span
+            class="c4 c7">});</span></p>
+    <p class="c0"><span class="c4">&nbsp;} </span><span class="c7 c18">//spawn three child processes when the server
+            starts</span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <h3 class="c14" id="h.gudnlc5sf27o"><span class="c6">Communication between children and parent</span></h3>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span>The following is the code corresponding to the child process. The child processes do a variety
+            of tasks the most important of which is to check for mistakes by the player and find if the puzzle has been
+            solved. The ‘e’ object received from the parent will have information about the type of task the child
+            should do and data required for the task. The children will do the task and send the response using
+            ‘process.send(.....)’</span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c0"><span class="c1">process</span><span class="c4">.</span><span class="c3">on</span><span
+            class="c4">(</span><span class="c5">"message"</span><span class="c4">, </span><span class="c1">e</span><span
+            class="c4">&nbsp;</span><span class="c12">=&gt;</span><span class="c4 c7">&nbsp;{</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; </span><span class="c2">if</span><span class="c4">(</span><span
+            class="c1">e</span><span class="c4">.</span><span class="c1">type</span><span class="c4">&nbsp;===
+        </span><span class="c5">"initiate"</span><span class="c4 c7">){</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c1">console</span><span
+            class="c4">.</span><span class="c3">log</span><span class="c4">(</span><span class="c5">`Child process with
+            id </span><span class="c12">${</span><span class="c1">process</span><span class="c4">.</span><span
+            class="c1">pid</span><span class="c12">}</span><span class="c5">&nbsp;created`</span><span
+            class="c4 c7">);</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c1">object</span><span
+            class="c4">&nbsp;= </span><span class="c1">e</span><span class="c4">.</span><span
+            class="c1">data</span><span class="c4 c7">;</span></p>
+    <p class="c0"><span class="c4 c7">&nbsp; &nbsp; }</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; </span><span class="c2">if</span><span class="c4">(</span><span
+            class="c1">e</span><span class="c4">.</span><span class="c1">type</span><span class="c4">&nbsp;===
+        </span><span class="c5">"addplayer"</span><span class="c4 c7">){</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c8">masterobject</span><span
+            class="c4">.</span><span class="c1">addplayer</span><span class="c4">&nbsp;= {</span><span
+            class="c1">socketid :</span><span class="c4">&nbsp;</span><span class="c1">e</span><span
+            class="c4">.</span><span class="c1">socketid</span><span class="c4 c7">} </span></p>
+    <p class="c0"><span class="c4 c7">&nbsp; &nbsp; }</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; </span><span class="c2">if</span><span class="c4">(</span><span
+            class="c1">e</span><span class="c4">.</span><span class="c1">type</span><span class="c4">&nbsp;===
+        </span><span class="c5">"removeplayer"</span><span class="c4 c7">){</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c8">masterobject</span><span
+            class="c4">.</span><span class="c1">removeplayer</span><span class="c4">&nbsp;= </span><span
+            class="c1">e</span><span class="c4">.</span><span class="c1 c7">socketid</span></p>
+    <p class="c0"><span class="c4 c7">&nbsp; &nbsp; }</span></p>
+    <p class="c0 c19"><span class="c4 c7"></span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; </span><span class="c2">if</span><span class="c4">(</span><span
+            class="c1">e</span><span class="c4">.</span><span class="c1">type</span><span class="c4">&nbsp;===
+        </span><span class="c5">"highlightcell"</span><span class="c4 c7">){</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c8">masterobject</span><span
+            class="c4">.</span><span class="c1">allarrays</span><span class="c4">[</span><span class="c1">e</span><span
+            class="c4">.</span><span class="c1">socketid</span><span class="c4">].</span><span
+            class="c1">highlightedcell</span><span class="c4">&nbsp;= [</span><span class="c1">e</span><span
+            class="c4">.</span><span class="c1">cellid</span><span class="c4 c7">]</span></p>
+    <p class="c0"><span class="c4 c7">&nbsp; &nbsp; }</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; </span><span class="c2">if</span><span class="c4">(</span><span
+            class="c1">e</span><span class="c4">.</span><span class="c1">type</span><span class="c4">&nbsp;===
+        </span><span class="c5">"inputnum"</span><span class="c4 c7">){</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c12">var</span><span
+            class="c4">&nbsp;</span><span class="c1">ref</span><span class="c4">&nbsp;= </span><span
+            class="c8">masterobject</span><span class="c4">.</span><span class="c1">allarrays</span><span
+            class="c4">[</span><span class="c1">e</span><span class="c4">.</span><span class="c1">socketid</span><span
+            class="c4 c7">]</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c12">var</span><span
+            class="c4">&nbsp;</span><span class="c1">hcellid</span><span class="c4">&nbsp;= </span><span
+            class="c1">ref</span><span class="c4">.</span><span class="c1 c7">highlightedcell</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c2">if</span><span class="c4">(
+        </span><span class="c1">hcellid</span><span class="c4">.</span><span class="c1">length</span><span
+            class="c4">&nbsp;!= </span><span class="c13">0</span><span class="c4 c7">){</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c12">var</span><span
+            class="c4">&nbsp;</span><span class="c1">i</span><span class="c4">&nbsp;= </span><span
+            class="c1">Math</span><span class="c4">.</span><span class="c3">floor</span><span class="c4">(</span><span
+            class="c1">hcellid</span><span class="c4">[</span><span class="c13">0</span><span class="c4">] /</span><span
+            class="c13">10</span><span class="c4">) - </span><span class="c13">1</span><span class="c4">&nbsp;,
+        </span><span class="c1">j</span><span class="c4">&nbsp;= </span><span class="c1">hcellid</span><span
+            class="c4">[</span><span class="c13">0</span><span class="c4">]%</span><span class="c13">10</span><span
+            class="c4">&nbsp;- </span><span class="c13 c7">1</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c1">ref</span><span
+            class="c4">.</span><span class="c1">initialarray</span><span class="c4">[</span><span
+            class="c1">i</span><span class="c4">][</span><span class="c1">j</span><span class="c4">][</span><span
+            class="c13">2</span><span class="c4">] = </span><span class="c3">parseInt</span><span
+            class="c4">(</span><span class="c1">e</span><span class="c4">.</span><span class="c1">inputnum</span><span
+            class="c4 c7">)</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c12">var</span><span
+            class="c4">&nbsp;</span><span class="c1">oneset</span><span class="c4">&nbsp;= </span><span
+            class="c3">check</span><span class="c4">(</span><span class="c1">e</span><span class="c4">.</span><span
+            class="c1">socketid</span><span class="c4">, </span><span class="c1">i</span><span class="c4">,</span><span
+            class="c1">j</span><span class="c4">, </span><span class="c1">e</span><span class="c4">.</span><span
+            class="c1">pid</span><span class="c4 c7">)</span></p>
+    <p class="c0"><span class="c4">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c1">process</span><span
+            class="c4">.</span><span class="c3">send</span><span class="c4">({</span><span class="c1">type :</span><span
+            class="c4">&nbsp;</span><span class="c5">"oneset"</span><span class="c4">, </span><span class="c1">socketid
+            :</span><span class="c4">&nbsp;</span><span class="c1">e</span><span class="c4">.</span><span
+            class="c1">socketid</span><span class="c4">, </span><span class="c1">oneset :</span><span
+            class="c4">&nbsp;</span><span class="c1">oneset</span><span class="c4">, </span><span class="c1">i
+            :</span><span class="c4">&nbsp;</span><span class="c1">i</span><span class="c4">, </span><span class="c1">j
+            :</span><span class="c4">&nbsp;</span><span class="c1">j</span><span class="c4">, </span><span
+            class="c1">pid :</span><span class="c4">&nbsp;</span><span class="c1">e</span><span class="c4">.</span><span
+            class="c1">pid</span><span class="c4 c7">})</span></p>
+    <p class="c0"><span class="c4 c7">&nbsp; &nbsp; &nbsp; &nbsp; }</span></p>
+    <p class="c0"><span class="c4 c7">&nbsp; &nbsp; }</span></p>
+    <h3 class="c14" id="h.rpdlse10gcqb"><span class="c6">More about Reduxoku </span></h3>
+    <p class="c10"><span class="c9 c7"></span></p>
+    <p class="c11"><span>We hope that the sections above has given you a concise and precise description of the
+            important aspects of Reduxoku. Here are the links for the github repo where you can find the entire code for
+            Reduxoku. </span></p>
+    <p class="c10"><span class="c9 c7"></span></p>
+</body>

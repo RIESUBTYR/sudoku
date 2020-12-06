@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {makeavailable, showmistake} from "./features/board/resultReducer"
 import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom"
 import Header from "./features/header/header"
+import Docs from "./features/header/docs.js"
 import Instructions from "./features/header/instructions"
 import Boardoverlay from "./features/board/boardoverlay"
 import Roomoverlay from "./features/board/roomoverlay"
@@ -78,9 +79,9 @@ function App() {
   return (
     <Router>
     <Header/>
-    <div className={Appstyles.parentcontainer}>
     <Switch>
-      <Route exact path="/">
+    <Route exact path="/">
+    <div className={Appstyles.parentcontainer}>
         <div className={Appstyles.secondparent}>
           <div className={Appstyles.gamearea}>
           <div className={Appstyles.boardandoverlay}>
@@ -97,12 +98,12 @@ function App() {
           </div>
           <Instructions/>
         </div>
+    </div>
       </Route>
       <Route path="/documentation">
-        <div>This is the documentation page</div>
+        <Docs/>
       </Route>
      </Switch>
-    </div>
     </Router>
   );
 }
