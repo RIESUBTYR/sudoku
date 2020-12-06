@@ -92,7 +92,6 @@ function check(socketid, i,j,pid){
            }
         return mistakes
         
-
     }
 }
 
