@@ -14,7 +14,6 @@ module.exports = function Generate(){
     this.requiredcorrect = 81 - totalones,
     this.issolved = 0
 }
-
 var totalones
 function mapper(){
     var numbers = fillValues()
