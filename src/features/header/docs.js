@@ -17,7 +17,7 @@ export default function Docs() {
         <div className={Docstyles.parent}>
             <h1>Reduxoku -  Seamless Real time Multiplayer Sudoku</h1>
             <p>
-                The team behind Reduxoku is a group of students from IIITDM Kancheepuram , batch of 2022/2023 . And Reduxoku was built as a project for one of our courses here in college. </p><p>
+                Hi, I am Wajeeh - a student from IIITDM Kancheepuram pursuing B.Tech degree in CSE, batch of 2022 . And Reduxoku was built as a project for one of my courses here in college. </p><p>
 
 Note : If you don’t have a group to play Reduxoku with then open Reduxoku in multiple tabs in your browser to see how multiplayer gameplay is. 
 
@@ -145,7 +145,11 @@ The following is a snippet from the client side code . The function ‘highlight
         <img src={Img10} alt=""/>
         </div>
             <h3>End </h3>
-            <p>Thank you for reading the docs! We  hope that the sections above have given you a concise and precise description of the important aspects of Reduxoku. </p>
+            <p>Thank you for reading the docs! I  hope that the sections above have given you a concise and precise description of the important aspects of Reduxoku. And here are the links to my Github repos where you can find the entire code for Reduxoku </p>
+            <a href="https://github.com/abuziyaadawajeeh/sudoku" target="_blank">Reduxoku Frontend</a> <br/>
+            <a href="https://github.com/abuziyaadawajeeh/sudoku_backend" target="_blank">Reduxoku Backend</a><br/>
+            <a  href="https://www.linkedin.com/in/wajahathullah-ms-807986141/">To view my Linkedin profile</a><br/>
+            <a href=""></a>
         </div>
     )
 }
